@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GridSure AI | AI-Powered Setting-Out Assurance & Spatial Verification Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  /* GridSure AI  Construction Precision / ConTech Palette */
+  --blue:#1A6B3C;        /* Deep Construction Green */
+  --blue-light:#28A05A;  /* Mid Green */
+  --blue-dim:#155830;    /* Dark Green */
+  --blue-dark:#0D3D21;   /* Deep Forest */
+  --blue-deeper:#071F11; /* Near-Black Green */
+
+  --accent:#F5A623;      /* Safety Orange / Amber */
+  --accent-light:#FDD88A;
+  --accent-dim:#C97F10;
+
+  --nav-bg:#071F11;
+  --footer-bg:#040F09;
+
+  --bg-white:#F4FAF6;
+  --bg-light:#E8F5ED;
+  --bg-section:#CEEBD9;
+  --bg-card:#FFFFFF;
+
+  --card-border:rgba(26,107,60,0.18);
+  --card-border-strong:rgba(26,107,60,0.38);
+
+  --text-dark:#07190D;
+  --text-mid:#1A3C27;
+  --text-muted:#4A6B58;
+  --text-light:#7A9988;
+  --white:#FFFFFF;
+
+  --nav-h:72px;
+  --max-w:1200px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --display:'Sora',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+
+body{font-family:var(--font);color:var(--text-dark);background:var(--bg-white);overflow-x:hidden;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-light);}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
+
+img{display:block;max-width:100%;}
+
+/* ─── NAVBAR ─────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;height:var(--nav-h);
+  background:var(--nav-bg);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(245,166,35,0.2);
+  z-index:1000;display:flex;align-items:center;
+  padding:0 clamp(16px,5vw,60px);
+  justify-content:space-between;
+  transition:border-color 0.3s;
+  box-shadow:0 2px 24px rgba(7,31,17,0.6);
+}
+.nav-logo{
+  font-family:var(--display);font-size:18px;font-weight:800;
+  color:var(--white);letter-spacing:-0.3px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.nav-logo-icon{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--blue),var(--accent));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(245,166,35,0.35);
+  border:1px solid rgba(245,166,35,0.4);
+}
+.nav-logo-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-text span{font-size:10px;font-family:var(--mono);font-weight:500;color:var(--accent-light);letter-spacing:2px;text-transform:uppercase;margin-top:3px;opacity:0.85;}
+
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links li button{
+  background:none;border:none;
+  color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;
+  padding:8px 14px;border-radius:7px;
+  transition:all 0.22s var(--ease);
+  cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;
+  position:relative;white-space:nowrap;
+}
+.nav-links li button:hover{color:#fff;background:rgba(245,166,35,0.15);}
+.nav-links li button.active{color:#fff;background:rgba(245,166,35,0.2);}
+.nav-links li button.active::after{
+  content:'';position:absolute;bottom:5px;left:50%;
+  transform:translateX(-50%);width:14px;height:2px;
+  background:var(--accent);border-radius:2px;
+}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-demo-nav{
+  background:linear-gradient(135deg,var(--accent),var(--blue-light));
+  color:var(--blue-deeper);border:none;padding:9px 20px;border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(245,166,35,0.35);
+}
+.btn-demo-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,166,35,0.5);}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;flex-shrink:0;}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;transition:0.3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;width:100%;
+  background:var(--blue-deeper);backdrop-filter:blur(20px);
+  padding:12px 20px 20px;flex-direction:column;gap:2px;
+  z-index:999;border-bottom:1px solid rgba(245,166,35,0.15);
+  animation:slideDown 0.25s var(--ease-out);
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-nav.open{display:flex;}
+.mobile-nav button{
+  background:none;border:none;color:rgba(255,255,255,0.8);
+  font-size:13px;font-weight:600;padding:13px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;font-family:var(--mono);text-align:left;
+  text-transform:uppercase;letter-spacing:1px;
+  transition:color 0.2s,background 0.2s;border-radius:6px;
+}
+.mobile-nav button:hover{color:#fff;background:rgba(245,166,35,0.15);}
+.mobile-nav .mob-cta{
+  margin-top:8px;background:linear-gradient(135deg,var(--accent),var(--blue-light));
+  color:var(--blue-deeper);border:none;padding:13px;
+  border-radius:8px;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:var(--mono);
+}
+
+/* ─── PAGE SYSTEM ─────────────────────────────────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.page.active{display:block;animation:pgIn 0.35s var(--ease);}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── SECTION COMMONS ─────────────────────────────────── */
+.label-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-dim);margin-bottom:14px;
+}
+.label-tag::before{content:'';width:20px;height:1px;background:var(--blue);}
+.label-tag-white{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);margin-bottom:14px;
+}
+.label-tag-white::before{content:'';width:20px;height:1px;background:var(--accent);}
+
+.section-h2{
+  font-family:var(--display);font-size:clamp(28px,3.5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-0.8px;
+  margin-bottom:10px;
+}
+.section-h2.blue-txt{color:var(--blue-dark);}
+.section-h2.dark{color:var(--text-dark);}
+.section-h2.white{color:var(--white);}
+
+.section-divider{width:56px;height:3px;margin:16px 0 28px;border-radius:2px;}
+.divider-blue{background:linear-gradient(90deg,var(--blue),transparent);}
+.divider-white{background:linear-gradient(90deg,var(--accent),transparent);}
+.divider-center{margin:16px auto 28px;}
+
+.para-dark{color:var(--text-mid);line-height:1.85;font-size:17px;}
+.para-light{color:rgba(255,255,255,0.85);line-height:1.85;font-size:17px;}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:var(--white);padding:13px 28px;border-radius:8px;
+  text-decoration:none;font-weight:700;font-size:12px;
+  letter-spacing:0.8px;text-transform:uppercase;
+  transition:all 0.25s;font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(26,107,60,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,107,60,0.5);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid var(--blue);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;text-decoration:none;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);background:none;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(26,107,60,0.08);border-color:var(--blue-dim);}
+
+.btn-white{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--white);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+}
+.btn-white:hover{transform:translateY(-2px);background:var(--accent-light);box-shadow:0 8px 28px rgba(0,0,0,0.2);}
+
+/* ─── STATUS BADGES ─────────────────────────────── */
+.risk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:0.5px;
+}
+.risk-blue{background:rgba(26,107,60,0.1);color:var(--blue-dim);border:1px solid rgba(26,107,60,0.28);}
+.risk-light{background:rgba(245,166,35,0.15);color:var(--blue-dark);border:1px solid rgba(26,107,60,0.25);}
+.risk-green{background:rgba(16,185,129,0.1);color:#059669;border:1px solid rgba(16,185,129,0.25);}
+.risk-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 40%,#A8D8BC 100%);
+  padding:clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(26,107,60,0.12) 0%,transparent 70%);
+}
+.hero-inner{
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);
+  align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(26,107,60,0.12);border:1px solid rgba(26,107,60,0.3);
+  border-radius:30px;padding:6px 16px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  color:var(--blue-dim);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:22px;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+h1{
+  font-family:var(--display);font-size:clamp(34px,5vw,64px);
+  font-weight:800;line-height:1.06;letter-spacing:-1.5px;color:var(--text-dark);
+  margin-bottom:6px;
+}
+h1 .blue{color:var(--blue);}
+h1 .dark-blue{color:var(--blue-dark);}
+.hero-rule{width:48px;height:3px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:2px;margin:20px 0;}
+.hero-body{font-size:17px;color:var(--text-mid);line-height:1.8;margin-bottom:28px;max-width:540px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+
+.hero-mini-stats{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.hero-mini-card{
+  background:rgba(255,255,255,0.85);
+  border:1px solid rgba(26,107,60,0.2);
+  border-radius:12px;padding:14px 18px;min-width:140px;
+  backdrop-filter:blur(8px);
+}
+.hero-mini-card strong{
+  display:block;font-family:var(--display);
+  font-size:22px;font-weight:800;color:var(--blue-dark);
+}
+.hero-mini-card span{font-size:11px;color:var(--text-muted);font-family:var(--mono);}
+
+/* DASHBOARD CARD */
+.score-card{
+  background:#fff;border-radius:18px;
+  border:1px solid rgba(26,107,60,0.2);
+  padding:24px;box-shadow:0 8px 40px rgba(13,61,33,0.12);
+}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.score-card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.dashboard-title{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);}
+.live-dot-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:1.5px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;}
+.score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(26,107,60,0.08);}
+.score-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;}
+.score-icon.blue-bg{background:rgba(26,107,60,0.12);color:var(--blue-dim);}
+.score-icon.light-bg{background:rgba(245,166,35,0.15);color:var(--blue-dark);}
+.score-icon.green-bg{background:rgba(16,185,129,0.1);color:#059669;}
+.score-lbl{flex:1;font-size:12px;color:var(--text-muted);}
+.score-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big{display:flex;align-items:center;gap:16px;margin-top:18px;padding:16px;background:linear-gradient(135deg,rgba(26,107,60,0.08),rgba(245,166,35,0.12));border-radius:12px;border:1px solid rgba(26,107,60,0.15);}
+.score-big-num{font-family:var(--display);font-size:48px;font-weight:800;color:var(--blue);line-height:1;}
+.score-big-info .label{font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big-info .sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-family:var(--mono);}
+
+/* ─── STATS STRIP ─────────────────────────────────────── */
+.section-blue{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-deeper) 100%);
+  padding:clamp(60px,8vw,96px) 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;
+}
+.stat-card{
+  background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  text-align:center;transition:transform 0.25s,border-color 0.25s;
+}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(245,166,35,0.4);}
+.stat-num{font-family:var(--display);font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--accent);margin-bottom:10px;}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;}
+
+/* ─── PLATFORM SECTION ─────────────────────────────────── */
+.platform-section{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.platform-sub{max-width:760px;margin-bottom:44px;color:var(--text-mid);}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.platform-card{
+  background:#fff;border:1px solid rgba(26,107,60,0.15);
+  border-radius:18px;overflow:hidden;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(13,61,33,0.06);
+}
+.platform-card:hover{border-color:rgba(26,107,60,0.35);box-shadow:0 12px 40px rgba(13,61,33,0.12);transform:translateY(-3px);}
+.platform-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--bg-light),var(--bg-section));}
+.platform-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.platform-card .inner{padding:22px;}
+.element-badge{
+  display:inline-block;background:rgba(26,107,60,0.1);
+  color:var(--blue-dim);border-radius:6px;
+  padding:3px 10px;font-family:var(--mono);font-size:9px;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:12px;border:1px solid rgba(26,107,60,0.18);
+}
+.platform-card h3{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);margin-bottom:10px;line-height:1.3;}
+.platform-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+.more-text{display:none;font-size:13px;color:var(--text-muted);line-height:1.75;margin-top:10px;padding-top:10px;border-top:1px solid rgba(26,107,60,0.1);}
+.platform-card.open .more-text{display:block;}
+.expand-btn{
+  margin-top:16px;background:none;border:1px solid rgba(26,107,60,0.28);
+  color:var(--blue-dim);padding:7px 18px;border-radius:7px;
+  font-size:11px;font-weight:700;cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;transition:all 0.2s;
+}
+.expand-btn:hover{background:rgba(26,107,60,0.08);border-color:var(--blue);}
+
+/* ─── WHY SECTION ─────────────────────────────────────── */
+.why-section{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+.why-card{
+  background:#fff;border:1px solid rgba(26,107,60,0.15);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  transition:border-color 0.25s,box-shadow 0.25s;
+}
+.why-card:hover{border-color:rgba(26,107,60,0.35);box-shadow:0 8px 28px rgba(13,61,33,0.1);}
+.why-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(26,107,60,0.12),rgba(245,166,35,0.2));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;font-size:20px;color:var(--blue);
+  border:1px solid rgba(26,107,60,0.18);
+}
+.why-card h4{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.why-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+
+/* ─── SECTION LIGHT / ALT ─────────────────────────────── */
+.section-light{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.section-alt{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+
+/* ─── MARKET CHARTS ─────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.chart-card{
+  background:#fff;border:1px solid rgba(26,107,60,0.15);
+  border-radius:18px;padding:24px;
+  box-shadow:0 4px 16px rgba(13,61,33,0.06);
+}
+.chart-card h4{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.chart-card p{font-size:12px;color:var(--text-muted);margin-bottom:20px;font-family:var(--mono);}
+.chart-wrap{height:260px;position:relative;}
+
+/* ─── ABOUT PAGE ─────────────────────────────────────────── */
+.about-hero{
+  background:linear-gradient(140deg,#CEEBD9 0%,#A8D8BC 60%,#7EC4A0 100%);
+  padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.about-hero::after{
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(26,107,60,0.15) 0%,transparent 70%);
+}
+.about-hero .container{position:relative;z-index:1;}
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.founder-card{
+  background:#fff;border:1px solid rgba(26,107,60,0.15);
+  border-radius:18px;padding:clamp(20px,3vw,36px);
+  box-shadow:0 4px 20px rgba(13,61,33,0.08);
+}
+.founder-img{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-dark));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;}
+.founder-card h3{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.founder-card .role{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:14px;}
+.founder-card p{font-size:13px;color:var(--text-muted);line-height:1.8;}
+.founder-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.f-badge{background:rgba(26,107,60,0.08);border:1px solid rgba(26,107,60,0.18);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:var(--blue-dim);letter-spacing:0.5px;}
+
+/* ─── FAQ ─────────────────────────────────────────────── */
+.faq-wrap{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.faq-item{background:#fff;border:1px solid rgba(26,107,60,0.15);border-radius:14px;overflow:hidden;}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px;}
+.faq-q h4{font-family:var(--display);font-size:15px;font-weight:600;color:var(--text-dark);}
+.faq-icon{font-size:20px;font-weight:300;color:var(--blue);flex-shrink:0;transition:transform 0.3s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-body{display:none;padding:0 22px 18px;font-size:14px;color:var(--text-muted);line-height:1.8;border-top:1px solid rgba(26,107,60,0.08);}
+.faq-item.open .faq-body{display:block;}
+
+/* ─── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;}
+.price-card{
+  background:#fff;border:1px solid rgba(26,107,60,0.15);
+  border-radius:18px;padding:clamp(22px,3vw,36px);
+  position:relative;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:0 4px 16px rgba(13,61,33,0.06);
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(13,61,33,0.14);}
+.price-card.featured{
+  border:2px solid var(--blue);
+  box-shadow:0 8px 40px rgba(26,107,60,0.18);
+  transform:scale(1.03);
+}
+.price-card.featured:hover{transform:scale(1.03) translateY(-4px);}
+.featured-label{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff;padding:4px 18px;border-radius:20px;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  white-space:nowrap;
+}
+.price-tier{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:8px;}
+.price-title{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
+.price-amount{font-family:var(--display);font-size:clamp(34px,4vw,48px);font-weight:800;color:var(--blue-dark);line-height:1;}
+.price-amount span{font-size:16px;font-weight:500;color:var(--text-muted);}
+.price-desc{font-size:13px;color:var(--text-muted);margin:12px 0 20px;line-height:1.6;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-features li{font-size:13px;color:var(--text-mid);display:flex;align-items:flex-start;gap:8px;}
+.price-features li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* ─── PROCESS ─────────────────────────────────────────── */
+.process-step{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(30px,5vw,72px);align-items:center;
+  margin-bottom:clamp(56px,8vw,96px);
+}
+.process-step:last-child{margin-bottom:0;}
+.step-num{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:12px;}
+.step-h3{font-family:var(--display);font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--text-dark);margin-bottom:16px;line-height:1.2;}
+.step-p{color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:18px;}
+.step-img{width:100%;aspect-ratio:16/10;border-radius:16px;border:1px solid rgba(26,107,60,0.15);overflow:hidden;box-shadow:0 8px 32px rgba(13,61,33,0.1);}
+.step-img img{width:100%;height:100%;object-fit:cover;}
+
+/* Image fallback placeholders */
+.img-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.7);font-family:var(--mono);font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;gap:10px;
+}
+.img-placeholder i{font-size:32px;color:var(--accent);}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.contact-form{background:#fff;border:1px solid rgba(26,107,60,0.15);border-radius:20px;padding:clamp(24px,4vw,44px);box-shadow:0 4px 20px rgba(13,61,33,0.06);}
+.contact-form h3{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.contact-form p{font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--text-mid);margin-bottom:6px;font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:12px 16px;border:1.5px solid rgba(26,107,60,0.18);
+  border-radius:10px;font-size:14px;font-family:var(--font);
+  color:var(--text-dark);background:#fff;
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,107,60,0.1);}
+.form-group textarea{min-height:120px;resize:vertical;}
+.contact-info{display:flex;flex-direction:column;gap:0;}
+.contact-info h3{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:16px;}
+.contact-info p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;}
+.contact-detail{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(26,107,60,0.1);}
+.contact-detail .icon{width:44px;height:44px;background:rgba(26,107,60,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0;font-size:18px;}
+.contact-detail .text strong{display:block;font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+.contact-detail .text span{font-size:13px;color:var(--text-muted);}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{background:var(--footer-bg);padding:clamp(48px,6vw,80px) 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-brand{font-family:var(--display);font-size:22px;font-weight:800;color:#fff;margin-bottom:14px;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:20px;}
+.footer-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.footer-badge{background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.8);letter-spacing:0.5px;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;transition:color 0.2s;}
+.footer-col a:hover{color:var(--accent);}
+.footer-bottom-bar{border-top:1px solid rgba(255,255,255,0.1);padding:20px 0;display:flex;align-items:center;justify-content:space-between;}
+.footer-bottom-bar p{font-size:12px;color:rgba(255,255,255,0.45);font-family:var(--mono);}
+.footer-bottom-bar p span{color:var(--accent);}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,0.5);cursor:pointer;font-family:var(--mono);transition:color 0.2s;}
+.footer-bottom-links a:hover{color:rgba(255,255,255,0.85);}
+
+/* ─── COMPARISON TABLE ───────────────────────── */
+.comp-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:40px;border-radius:16px;border:1px solid rgba(26,107,60,0.15);box-shadow:0 4px 16px rgba(13,61,33,0.06);}
+.comp-table{width:100%;border-collapse:collapse;background:#fff;}
+.comp-table th{background:linear-gradient(135deg,var(--blue-dark),var(--blue-deeper));color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:16px 18px;text-align:left;}
+.comp-table th:first-child{border-radius:16px 0 0 0;}
+.comp-table th:last-child{border-radius:0 16px 0 0;}
+.comp-table td{padding:14px 18px;font-size:13px;color:var(--text-mid);border-bottom:1px solid rgba(26,107,60,0.08);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:hover td{background:rgba(26,107,60,0.03);}
+.comp-table td:first-child{font-weight:600;color:var(--text-dark);}
+.comp-table .yes{color:#059669;font-weight:700;}
+.comp-table .no{color:#94a3b8;font-weight:500;}
+.comp-table .highlight-col{background:rgba(26,107,60,0.06);}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .btn-demo-nav{display:none;}
+  .hero-inner{grid-template-columns:1fr;gap:40px;}
+  .hero-inner > div:last-child{display:none;}
+  .hero .hero-mini-stats{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .platform-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .price-card.featured{transform:scale(1);}
+  .process-step{grid-template-columns:1fr;gap:28px;}
+  .step-img{aspect-ratio:16/9;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .charts-grid{grid-template-columns:1fr;}
+  .founders-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom-bar{flex-direction:column;align-items:flex-start;gap:10px;}
+  .footer-bottom-links{flex-wrap:wrap;gap:12px;}
+  .section-light [style*="grid-template-columns:1fr 1fr"],
+  .section-alt [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important;}
+  .platform-grid[style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr !important;}
+  .addons-grid{grid-template-columns:1fr !important;}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .hero-mini-stats{flex-direction:column;}
+  .hero-mini-card{min-width:unset;width:100%;}
+  .btn-primary,.btn-secondary,.btn-white{width:100%;justify-content:center;}
+  .footer-bottom-links{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-text">
+      GridSure AI
+      <span>Setting-Out Assurance Platform</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><button id="nav-home" class="active" onclick="showPage('home')">Home</button></li>
+    <li><button id="nav-about" onclick="showPage('about')">About</button></li>
+    <li><button id="nav-platform" onclick="showPage('platform')">Platform</button></li>
+    <li><button id="nav-market" onclick="showPage('market')">Market</button></li>
+    <li><button id="nav-process" onclick="showPage('process')">Process</button></li>
+    <li><button id="nav-faq" onclick="showPage('faq')">FAQ</button></li>
+    <li><button id="nav-pricing" onclick="showPage('pricing')">Pricing</button></li>
+    <li><button id="nav-contact" onclick="showPage('contact')">Contact</button></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="btn-demo-nav" onclick="showPage('contact')">Request Demo</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('about');closeMobile()">About</button>
+  <button onclick="showPage('platform');closeMobile()">Platform</button>
+  <button onclick="showPage('market');closeMobile()">Market</button>
+  <button onclick="showPage('process');closeMobile()">Process</button>
+  <button onclick="showPage('faq');closeMobile()">FAQ</button>
+  <button onclick="showPage('pricing');closeMobile()">Pricing</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+  <button class="mob-cta" onclick="showPage('contact');closeMobile()">Request Demo →</button>
+</div>
+
+
+<!-- ═══════ PAGE: HOME ═══════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        
+        <h1>
+          See Clearly.<br>
+          <span class="blue">Verify Precisely.</span>
+          <span class="dark-blue"> Build Right First Time.</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-body">
+          GridSure AI is an AI-powered, cloud-native setting-out assurance and spatial verification platform for UK construction, groundworks and infrastructure. It detects coordinate errors, predicts tolerance drift, and verifies physical site markings in real time  protecting SME subcontractors' margins and eliminating structural rework before concrete is poured.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Book a Platform Demo</button>
+          <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+        </div>
+      </div>
+      <!-- DASHBOARD CARD -->
+      <div>
+        <div class="score-card">
+          <div class="score-card-top">
+            <div>
+              <div class="score-card-label">GridSure AI · Live Engine</div>
+              <h3 class="dashboard-title">Site Verification Intelligence Dashboard</h3>
+            </div>
+            <div class="live-dot-wrap"><span class="live-dot"></span>LIVE</div>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">SA</div>
+            <span class="score-lbl">Setting-Out Assurance Score</span>
+            <span class="score-val">DRIFT DETECTED ⚠ +3mm</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon light-bg">TD</div>
+            <span class="score-lbl">Tolerance Drift Monitoring</span>
+            <span class="score-val">99.1% Accuracy ↑ ✓</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon green-bg">PV</div>
+            <span class="score-lbl">Pre-Pour Verification Gate</span>
+            <span class="score-val">2.1 min Alert ↓94%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">GT</div>
+            <span class="score-lbl">Golden Thread Compliance</span>
+            <span class="score-val">100% Audit-Ready</span>
+          </div>
+          <div class="score-big">
+            <div class="score-big-num">£25<span style="font-size:24px;">K</span></div>
+            <div class="score-big-info">
+              <div class="label">Avg. Cost Per Out-of-Tolerance Occurrence</div>
+              <div class="sub">GridSure AI · Predictive Prevention · Active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">The UK Construction Rework Crisis</div>
+      <h2 class="section-h2 white">UK Construction Loses Billions Annually to<br>Avoidable Setting-Out Errors.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:760px;">
+        UK subcontractors face an operationally critical bottleneck: converting digital CAD and BIM data into accurate physical site execution. The Get It Right Initiative (GIRI) reports £10–£25 billion lost annually to avoidable errors  10–21% of total industry output. GridSure AI is the predictive spatial quality gate that turns raw coordinate data into a verified, audit-ready site execution layer  protecting margins, accelerating handovers, and eliminating structural rework before it happens.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">£25B</div>
+          <div class="stat-lbl">Annual UK construction losses from avoidable errors  10–21% of total industry output (GIRI, 2024)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£25K</div>
+          <div class="stat-lbl">Average cost per out-of-tolerance structural occurrence in demolition, rework, and delays for UK subcontractors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">45%</div>
+          <div class="stat-lbl">Of setting-out errors caused by manual drawing-to-site translation  human coordinate entry and CAD-to-total-station transfer mistakes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">50%</div>
+          <div class="stat-lbl">Reduction in QA handover time achieved through GridSure AI's pre-pour verification and digital compliance certificates</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PREVIEW -->
+<section class="platform-section">
+  <div class="container">
+
+    <div class="label-tag">Core Intelligence Modules</div>
+
+    <h2 class="section-h2 dark">
+      Six Capabilities. One Complete Setting-Out Assurance Platform.
+    </h2>
+
+    <div class="section-divider divider-blue"></div>
+
+    <p class="para-dark platform-sub">
+      GridSure AI combines AI Setting-Out Assurance, Tolerance Drift Monitoring,
+      Site-Mark Vision AI, Revision-Sensitive Verification, Golden Thread
+      Compliance, and Carbon Rework Intelligence into one unified B2B SaaS
+      platform—delivering predictive spatial verification without proprietary
+      hardware or complex IT infrastructure.
+    </p>
+
+    <div class="platform-grid">
+
+      <!-- MODULE 01 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid1.jpg" alt="AI Setting-Out Assurance Engine">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 01</div>
+
+          <h3>AI Setting-Out Assurance Engine</h3>
+
+          <p>
+            Automatically analyses raw coordinate tables and CAD files to reveal
+            geometric conflicts, mathematical outliers, or drafting discrepancies
+            before layout markers are staked.
+          </p>
+
+          <div class="more-text">
+            The AI Setting-Out Assurance Engine builds a unique project-level risk
+            and tolerance profile for each site, continually learning error
+            signature patterns, localised geological coordinate transformations,
+            and subcontractor performance trends.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- MODULE 02 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid2.jpg" alt="Tolerance Drift Monitoring">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 02</div>
+
+          <h3>Tolerance Drift Monitoring System</h3>
+
+          <p>
+            Collects spatial coordinate patterns from layout clusters to identify
+            systematic directional biases before they cascade into structural
+            misalignment across gridlines.
+          </p>
+
+          <div class="more-text">
+            Aggregates real-time spatial coordinate clusters across foundations,
+            piling grids and structural layouts to identify drift patterns and
+            calibration issues before major construction activities begin.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- MODULE 03 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid3.jpg" alt="Site-Mark Intelligence System">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 03</div>
+
+          <h3>Site-Mark Intelligence System</h3>
+
+          <p>
+            Computer vision automatically digitises, classifies and verifies
+            hand-marked survey stakes from smartphone photographs.
+          </p>
+
+          <div class="more-text">
+            Engineers upload photographs of physical pegs and markings. The
+            platform compares field data against approved coordinate schedules
+            and design information to identify deviations instantly.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- MODULE 04 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid4.jpg" alt="Revision Verification">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 04</div>
+
+          <h3>Revision-Sensitive Verification</h3>
+
+          <p>
+            Automatically checks active setting-out activities against the latest
+            approved drawing revisions.
+          </p>
+
+          <div class="more-text">
+            Prevents site teams from using superseded drawings by comparing live
+            project information against approved document registers and Common
+            Data Environment records.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- MODULE 05 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid5.jpg" alt="Golden Thread Compliance">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 05</div>
+
+          <h3>Golden Thread Compliance Ledger</h3>
+
+          <p>
+            Creates structured digital records supporting quality assurance,
+            traceability and audit-ready compliance.
+          </p>
+
+          <div class="more-text">
+            Every coordinate review, verification activity and site approval is
+            documented to provide a transparent digital construction record.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- MODULE 06 -->
+      <div class="platform-card">
+        <div class="platform-img-wrap">
+          <img src="grid6.jpg" alt="Carbon Rework Intelligence">
+        </div>
+
+        <div class="inner">
+          <div class="element-badge">Module 06</div>
+
+          <h3>Carbon & Rework Intelligence</h3>
+
+          <p>
+            Connects setting-out accuracy with material waste reduction and
+            operational efficiency.
+          </p>
+
+          <div class="more-text">
+            Helps project teams understand the impact of layout risk on rework,
+            productivity, material usage and sustainability performance.
+          </div>
+
+          <button class="expand-btn" onclick="toggleCard(this)">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+  <!-- WHY SECTION -->
+  <section class="why-section">
+    <div class="container">
+      <div class="label-tag">Why GridSure AI</div>
+      <h2 class="section-h2 dark">Built for Precision Execution.<br>Not Just a Digital Checklist with an AI Badge.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-drafting-compass"></i></div>
+          <h4>Predictive Pre-Pour Quality Gate</h4>
+          <p>Moves beyond passive defect recording to an active spatial verification layer that screens every coordinate upload before physical execution  preventing rework rather than logging it after the fact.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-project-diagram"></i></div>
+          <h4>Dynamic Project Layout Fingerprint</h4>
+          <p>Captures a unique project layout fingerprint for each site  linking grid coordinates, piling tolerances, and instrument calibration trends  building a proprietary UK-specific spatial intelligence asset.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-pound-sign"></i></div>
+          <h4>Margin & Rework Cost Protection</h4>
+          <p>Converts millimetre-level deviations into real monetary savings  showing subcontractors exactly how much concrete waste, steel rework, and plant-hire delay each error would have cost, protecting razor-thin 3–4% margins.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h4>Hardware-Agnostic Mobile Deployment</h4>
+          <p>Zero proprietary hardware required. Site teams use standard total stations and smartphone cameras  enabling immediate, low-friction adoption across SME groundwork, piling, and concrete subcontractors.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-leaf"></i></div>
+          <h4>ESG Carbon Rework Estimator</h4>
+          <p>Translates geometric deviations into avoided CO₂ volumes  helping UK contractors demonstrate concrete waste reduction, net-zero compliance, and ESG accountability to developers and insurers.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-certificate"></i></div>
+          <h4>SME-Optimised SaaS from £50/month</h4>
+          <p>Tiered SaaS pricing gives independent site engineers and regional subcontractors enterprise-grade spatial verification without the cost of Leica ConX hardware or Autodesk multi-seat licensing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page home -->
+
+
+<!-- ═══════ PAGE: ABOUT ═══════ -->
+<div class="page" id="page-about">
+  <section class="about-hero">
+    <div class="container">
+      <div class="label-tag">About Us</div>
+      <h2 class="section-h2 dark">Built by a Site Engineer Who Lived the Problem.<br><span style="color:var(--blue-dark);">Designed for the Precision Execution Era.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">GridSure AI is a UK-based B2B SaaS ConTech venture founded by Saroj Pandey  combining deep hands-on UK site engineering expertise with advanced postgraduate business management training to solve the most pressing challenge facing UK construction subcontractors: the "Accuracy Gap" that turns millimetre-level setting-out errors into catastrophic structural rework, costing the industry £10–£25 billion per year.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Get in Touch</button>
+        <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission -->
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Vision & Mission</div>
+      <h2 class="section-h2 dark">To Be the Most Trusted Setting-Out Assurance<br>Platform in the UK and Beyond.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-eye"></i></div>
+          <h4>Our Vision</h4>
+          <p>A future where the physical execution of every construction site perfectly matches the digital intent of the design  with no setting-out errors, structurally bulletproof foundations, and sustainably developed, waste-free buildings. GridSure AI is the AI-powered spatial platform that makes this vision a commercially viable, everyday reality for UK SME subcontractors.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+          <h4>Our Mission</h4>
+          <p>To empower UK construction contractors, site engineers, and regional developers to predict, prevent, and reduce spatial setting-out errors through intelligent data pipelines, advanced mobile computer vision, and automated tolerance analytics  protecting builders' profit margins, accelerating project handovers, and eliminating structural rework on physical sites.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="label-tag">Core Values</div>
+      <h2 class="section-h2 dark">What Drives Everything We Build</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-crosshairs"></i></div>
+          <h4>Accuracy</h4>
+          <p>A constant dedication to mathematical and spatial integrity. No coordinate transformation errors. No cumulative tolerance drift on live construction sites. Every millimetre validated before physical execution begins.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h4>Innovation</h4>
+          <p>Continuous optimisation of GridSure AI's spatial engines, computer vision models, and drawing-to-site verification pipelines to keep pace with the evolution of CAD/BIM structures and mobile capture technology.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bolt"></i></div>
+          <h4>Efficiency</h4>
+          <p>Making complex coordinate, gridline, and revision compliance checks instantly accessible through intuitive, low-friction, mobile-friendly interfaces on active, fast-paced jobsites without specialist IT overhead.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-lock"></i></div>
+          <h4>Sovereignty</h4>
+          <p>Empowering subcontractors to own, verify, and store their physical layout data as an immutable, defensible, and audit-ready business asset  providing a reliable digital audit trail for third-party handovers.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-hands-helping"></i></div>
+          <h4>Empowerment</h4>
+          <p>Offering SME groundwork, piling, and concrete subcontractors advanced quality-assurance tools that enable them to execute layouts with perfection and protect margins without headcount-proportional complexity.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-globe"></i></div>
+          <h4>ESG Impact</h4>
+          <p>Preventing structural rework reduces avoidable CO₂ emissions, eliminates unnecessary demolition waste, and helps UK contractors demonstrate true sustainability  directly supporting the UK's Net Zero construction goals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Founder & Leadership</div>
+      <h2 class="section-h2 dark">The People Behind<br>GridSure AI</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="founders-grid">
+        <div class="founder-card">
+          <div class="founder-img">SP</div>
+          <h3>Saroj Pandey</h3>
+          <div class="role">Founder & CEO · Domain Expert & Strategic Lead</div>
+          <p>Saroj brings hands-on UK civil engineering and structural setting-out expertise, having personally executed high-precision layouts using Robotic Total Stations (Leica TS16), managed continuous flight auger piling, concrete reinforcement quality control, and structural steel bolt layouts across challenging UK developments. His MSc in Management with Project Management from BPP University London, combined with a Civil Engineering degree from Pokhara University, gives him a uniquely powerful blend of technical field credibility and commercial SaaS strategic capability.</p>
+         
+        </div>
+       <div class="founder-card">
+  <div class="founder-img">AI</div>
+  <h3>Technology & Product Development</h3>
+  <div class="role">GridSure AI · Platform Engineering & Innovation</div>
+
+  <p>
+    GridSure AI is currently in its product development and validation phase, with
+    technology development focused on building a reliable, cloud-native platform for
+    construction setting-out assurance, spatial verification, and tolerance control.
+  </p>
+
+  <p>
+    The platform combines coordinate auditing, CAD/BIM validation, computer vision,
+    and automated quality-assurance workflows to help contractors identify and
+    prevent setting-out errors before they result in costly rework, project delays,
+    and compliance risks.
+  </p>
+
+  <p>
+    As the business scales, GridSure AI will expand its technical leadership team to
+    support platform engineering, AI model development, cloud infrastructure,
+    cybersecurity, and enterprise integrations while maintaining a strong focus on
+    accuracy, reliability, and compliance with UK construction standards.
+  </p>
+</div>
+    </div>
+  </section>
+</div><!-- end page about -->
+
+
+<!-- ═══════ PAGE: PLATFORM ═══════ -->
+<div class="page" id="page-platform">
+  <section style="background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 60%,#A8D8BC 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Full Platform</div>
+      <h2 class="section-h2 dark">Six Core Capabilities.<br><span style="color:var(--blue-dark);">One Predictive Setting-Out Assurance Platform.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">Every feature is built specifically for the high-precision UK SME construction environment  not retrofitted from generic document management tools. Our proprietary AI Setting-Out Assurance Engine and Tolerance Drift Monitoring System translate complex coordinate mathematics and drawing relationships into actionable, compliance-ready insights that subcontractors actually need on live jobsites.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request Demo →</button>
+        <button class="btn-secondary" onclick="showPage('pricing')">View Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="platform-grid" style="grid-template-columns:repeat(2,1fr);gap:28px;">
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="platform-img-wrap">
+  <img src="grid7.jpg" alt="AI Setting-Out Assurance Engine">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 01 · Coordinate Intelligence</div>
+            <h3>AI Setting-Out Assurance Engine</h3>
+            <p>Automatically analyses raw coordinate tables and CAD files to cross-correlate and reveal geometric conflicts, mathematical outliers, and drafting discrepancies before layout markers are staked on site.</p>
+            <div class="more-text">The AI Setting-Out Assurance Engine ingests multi-format design files (DWG, DXF, CSV coordinate schedules, BIM models) and constructs a dynamic project layout fingerprint for each construction site  learning coordinate-transformation baselines, instrument-shifting tolerances, and sub-surface geotechnical anomalies. The system automatically flags inconsistencies, generating warning notifications and remedial suggestions that prevent structural misalignment before physical execution begins.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+           <div class="platform-img-wrap">
+  <img src="grid8.jpg" alt="Tolerance Drift Monitoring">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 02 · Drift Detection</div>
+            <h3>Tolerance Drift Monitoring System</h3>
+            <p>Aggregates spatial coordinate patterns from on-site layout clusters to detect small systematic directional biases  such as uncalibrated robotic total stations  that pass individual checks but degrade structural grid lines.</p>
+            <div class="more-text">Traditional quality checks verify individual points in isolation. GridSure AI's Tolerance Drift Monitoring System aggregates all spatial coordinate patterns to identify cumulative directional bias (e.g., a 3mm drift repeated across 12 piles adds up to structural misalignment of 36mm). The system detects systematic equipment errors  such as uncalibrated Leica or Trimble total stations  and alerts field teams to recalibrate before excavation or concrete pour, preventing catastrophic structural failure.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="platform-img-wrap">
+  <img src="grid9.jpg" alt="AI Setting-Out Assurance Engine">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 03 · Vision AI</div>
+            <h3>Site-Mark Intelligence System</h3>
+            <p>Advanced mobile computer vision automatically processes, digitises, and classifies hand-marked survey stakes from standard smartphone photos  enabling direct comparison of physical realities with digital design registries.</p>
+            <div class="more-text">The Site-Mark Intelligence System eliminates the need for specialist survey instruments to verify physical peg markings. Site engineers simply photograph survey stakes, pins, and level markings on-site and upload them via the mobile app. The vision AI automatically reads cut/fill notations, coordinate offsets, and grid IDs from the image, cross-references them against the active CAD register, and immediately flags any mismatches  turning a smartphone into a precision spatial audit tool.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="platform-img-wrap">
+  <img src="grid10.jpg" alt="Revision-Sensitive Verification">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 04 · Drawing Sync</div>
+            <h3>Revision-Sensitive Setting-Out Verification</h3>
+            <p>Automatically syncs with live Common Data Environments (CDEs) to instantly alert field engineers if they are setting out from outdated or superseded drawing revisions.</p>
+            <div class="more-text">34% of UK setting-out failures occur because field teams execute layouts using obsolete paper plans. GridSure AI's Revision-Sensitive Verification module integrates directly with Procore, Autodesk Construction Cloud, and Dropbox  automatically checking drawing file IDs and revision numbers against the current master drawing register. If a site engineer uploads a coordinate schedule from an outdated revision, the platform instantly alerts the field team before any physical markers are staked.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="platform-img-wrap">
+  <img src="grid11.jpg" alt="Carbon Rework Estimator">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 05 · ESG Analytics</div>
+            <h3>Material Rework Carbon &amp; Cost Estimator</h3>
+            <p>Converts layout-accuracy failure risks into the volume of concrete, steel reinforcement, and earthworks fuel that would be wasted on rework  translating geometric deviations into tonnes of CO₂-equivalent avoided.</p>
+            <div class="more-text">GridSure AI is not just a cost management tool  it is a sustainability platform. The Material Rework Carbon Estimator translates every millimetre deviation into precise material waste calculations (volume of concrete, steel re-fabrication, machinery fuel) using proprietary algorithms mapped to UK supply chain emission factors. This enables contractors to generate audit-ready ESG reports demonstrating carbon offset savings through early-stage error prevention, directly supporting Building Safety Act 2022 Golden Thread compliance.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="platform-img-wrap">
+  <img src="grid12.jpg" alt="Golden Thread Compliance">
+</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 06 · Compliance Reporting</div>
+            <h3>"Golden Thread" Compliance Ledger</h3>
+            <p>Organises and indexes timestamped, certified setting-out reports  creating an immutable digital ledger fully compliant with the UK Building Safety Act 2022 and structural audit guidelines.</p>
+            <div class="more-text">The Golden Thread Compliance Ledger automatically converts raw on-site coordinate checks and mobile peg photos into timestamped, branded layout compliance certificates  meeting the strict requirements of the UK Building Safety Regulator (BSR), British Standards BS 5964 and BS EN 1090, and NHBC foundation guidelines. Every spatial deviation, drawing revision flag, and tolerance alert is permanently stored with a structured audit trail  minimising contractor liability and insurance friction during structural handovers.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Competitor Comparison -->
+      <div style="margin-top:60px;">
+        <div class="label-tag">Competitor Analysis</div>
+        <h2 class="section-h2 dark" style="margin-bottom:8px;">How GridSure AI Compares</h2>
+        <div class="section-divider divider-blue"></div>
+        <p class="para-dark" style="max-width:700px;margin-bottom:0;">GridSure AI is the only platform combining predictive pre-pour coordinate auditing, automated tolerance drift detection, UK-specific structural compliance, and mobile computer vision site-mark verification in a single SME-optimised SaaS  with no proprietary hardware required.</p>
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Feature / Capability</th>
+                <th>Leica ConX / Trimble Connect</th>
+                <th>Autodesk Construction Cloud</th>
+                <th>Fieldwire</th>
+                <th>Manual Methods</th>
+                <th style="background:var(--blue);">GridSure AI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>AI-Driven Coordinate Auditing</td><td class="no">Manual CAD loading</td><td class="no">Passive file storage</td><td class="no">Manual check-offs</td><td class="no">Manual calculations</td><td class="yes highlight-col">✓ Multi-format coordinate deconstruction</td></tr>
+              <tr><td>Predictive Tolerance Drift Prevention</td><td class="no">Points in isolation only</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Aggregates clusters, detects bias</td></tr>
+              <tr><td>UK British Standards Calibration</td><td class="no">Generic global math</td><td class="no">Generic workflows</td><td class="no">No</td><td class="no">Hand-calculated</td><td class="yes highlight-col">✓ BS 5964, BS EN 1090, NHBC</td></tr>
+              <tr><td>Material Waste & Carbon Estimating</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Converts errors to CO₂ &amp; cost</td></tr>
+              <tr><td>Multi-Modal Data (Peg Photos + CAD)</td><td class="no">Total station files only</td><td class="no">CAD/BIM only</td><td class="no">Manual uploads only</td><td class="no">Paper sketches</td><td class="yes highlight-col">✓ DWG, CSV, smartphone peg photos</td></tr>
+              <tr><td>Golden Thread / BSR Compliance</td><td class="no">No</td><td class="no">Basic document logs</td><td class="no">Simple PDF export</td><td class="no">Manual paper QA</td><td class="yes highlight-col">✓ Auto timestamped compliance certs</td></tr>
+              <tr><td>Hardware Requirement</td><td class="no">Multi-£K proprietary hardware</td><td class="no">Complex IT overhead</td><td class="no">General mobile</td><td class="no">Paper-based</td><td class="yes highlight-col">✓ Zero  standard phone &amp; total station</td></tr>
+              <tr><td>SME Affordability</td><td class="no">High CAPEX + annual fees</td><td class="no">High seat-based SaaS</td><td class="no">Tiered user SaaS</td><td class="no">High labour cost</td><td class="yes highlight-col">✓ From £50/month, pay-per-project</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page platform -->
+
+
+<!-- ═══════ PAGE: MARKET ═══════ -->
+<div class="page" id="page-market">
+  <section style="background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 50%,#A8D8BC 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Market Analysis</div>
+      <h2 class="section-h2 dark">A £144 Billion Industry Losing Billions<br>to Avoidable Errors. <span style="color:var(--blue-dark);">GridSure AI Is the Solution.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">The UK construction and civil engineering industry generates over £144 billion annually and employs approximately 9% of the total UK workforce. GridSure AI targets the high-volume, highly fragmented SME subcontractor segment  groundworks, piling, concrete frame, and drainage specialists  who execute physical site layouts and carry the greatest exposure to setting-out errors, with rework costs averaging £4,000–£6,000 per structural phase.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request Demo →</button>
+        <button class="btn-secondary" onclick="showPage('pricing')">View Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Market Data & Intelligence</div>
+      <h2 class="section-h2 dark">The Numbers Behind the Opportunity</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h4>UK Construction SAM by Region (£B Pipeline)</h4>
+          <p>Target addressable market share across UK construction regions for SME subcontractors</p>
+          <div class="chart-wrap"><canvas id="chartSector"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Root Causes of UK Setting-Out Failures</h4>
+          <p>Primary error sources driving structural rework costs across UK subcontractors (GIRI 2024)</p>
+          <div class="chart-wrap"><canvas id="chartRootCause"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>GridSure AI vs Competitors  Capability Radar</h4>
+          <p>Platform capabilities vs existing market alternatives across key spatial verification dimensions</p>
+          <div class="chart-wrap"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Global ConTech AI Quality Assurance Market 2024–2034</h4>
+          <p>Global market growth (USD B) + UK regulatory-driven adoption trajectory (%)</p>
+          <div class="chart-wrap"><canvas id="chartGrowth"></canvas></div>
+        </div>
+      </div>
+      <div class="charts-grid" style="grid-template-columns:1fr;margin-top:32px;">
+        <div class="chart-card">
+          <h4>Platform Feature Comparison  GridSure AI vs Market Average</h4>
+          <p>Capability scores across key spatial verification intelligence dimensions (out of 100)</p>
+          <div class="chart-wrap"><canvas id="chartPerf"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Revenue Projections -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">Financial Projections</div>
+      <h2 class="section-h2 white">3-Year Revenue Trajectory</h2>
+      <div class="section-divider divider-white"></div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">£67K</div>
+          <div class="stat-lbl">Year 1 Revenue · 5–10 pilot sites · London & South East · £50K founder equity · Product validation phase</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£331K</div>
+          <div class="stat-lbl">Year 2 Revenue · 50–100 active construction sites · Full UK launch · £48,859 net profit · API integrations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£669K</div>
+          <div class="stat-lbl">Year 3 Revenue · 200+ projects across UK · £121,018 net profit · Ireland & APAC pilots · C-SIN scaling</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">20+</div>
+          <div class="stat-lbl">High-value UK-based ConTech, AI engineering, and customer success roles created by Year 5 at platform maturity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page market -->
+
+
+<!-- ═══════ PAGE: PROCESS ═══════ -->
+<div class="page" id="page-process">
+
+  <!-- HERO -->
+  <section style="background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 50%,#A8D8BC 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">How It Works</div>
+
+      <h2 class="section-h2 dark">
+        From Manual Coordinate Entry<br>
+        to <span style="color:var(--blue-dark);">Predictive Pre-Pour Spatial Assurance</span>
+      </h2>
+
+      <div class="section-divider divider-blue"></div>
+
+      <p class="para-dark" style="max-width:700px;margin-bottom:40px;">
+        GridSure AI operates as a closed-loop spatial quality lifecycle—ingesting,
+        verifying, monitoring, alerting, reporting, and continuously improving
+        construction layout intelligence. Every setting-out decision is supported
+        by predictive verification rather than reactive surveying after costly
+        rework has already occurred.
+      </p>
+
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">
+          Request a Demo →
+        </button>
+
+        <button class="btn-secondary" onclick="showPage('platform')">
+          Explore Capabilities
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section-light" style="padding-top:clamp(60px,8vw,96px);">
+    <div class="container">
+
+      <div class="label-tag">The 6-Phase Spatial Assurance Lifecycle</div>
+
+      <h2 class="section-h2 dark">
+        A Complete Setting-Out Intelligence Loop —
+        Not Just a Coordinate Checker
+      </h2>
+
+      <div class="section-divider divider-blue"></div>
+
+      <!-- PHASE 1 -->
+      <div class="process-step">
+
+        <div>
+          <div class="step-num">Phase 01 · Ingest</div>
+
+          <h3 class="step-h3">
+            Upload Design Files, Drawings & Coordinate Schedules
+          </h3>
+
+          <p class="step-p">
+            GridSure AI ingests DWG, DXF, BIM, PDF and coordinate schedule files
+            to create a complete digital representation of each active project.
+            The platform automatically interprets structural geometry, coordinate
+            relationships and revision history.
+          </p>
+
+          <p class="step-p">
+            This creates the baseline intelligence layer required to identify
+            potential setting-out risks before layout activities begin on site.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              DWG / DXF / PDF Upload
+            </span>
+
+            <span class="risk-badge risk-light">
+              <span class="risk-dot"></span>
+              BIM Integration
+            </span>
+
+            <span class="risk-badge risk-green">
+              <span class="risk-dot"></span>
+              Cloud-Based Processing
+            </span>
+          </div>
+        </div>
+
+        <div class="step-img">
+          <img src="grid13.jpg"
+               alt="Design File Ingestion"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="process-step">
+
+        <div class="step-img">
+          <img src="grid14.jpg"
+               alt="Coordinate Auditing"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+        <div>
+
+          <div class="step-num">Phase 02 · Audit</div>
+
+          <h3 class="step-h3">
+            Coordinate Auditing & Conflict Detection
+          </h3>
+
+          <p class="step-p">
+            The AI Setting-Out Assurance Engine automatically analyses uploaded
+            coordinate schedules and design information to identify conflicts,
+            mathematical inconsistencies, transformation issues and alignment risks.
+          </p>
+
+          <p class="step-p">
+            Rather than relying solely on manual review, project teams receive
+            immediate visibility into potential setting-out errors before they
+            reach the field.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              Conflict Detection
+            </span>
+
+            <span class="risk-badge risk-light">
+              <span class="risk-dot"></span>
+              Coordinate Validation
+            </span>
+
+            <span class="risk-badge risk-green">
+              <span class="risk-dot"></span>
+              Automated Checking
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="process-step">
+
+        <div>
+
+          <div class="step-num">Phase 03 · Monitor</div>
+
+          <h3 class="step-h3">
+            Tolerance Drift Monitoring
+          </h3>
+
+          <p class="step-p">
+            GridSure AI continuously evaluates layout data to identify systematic
+            directional drift, equipment calibration issues and cumulative
+            deviations that may not be visible through isolated checks.
+          </p>
+
+          <p class="step-p">
+            Early detection allows project teams to correct issues before they
+            escalate into costly structural misalignment and rework.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-green">
+              <span class="risk-dot"></span>
+              Drift Detection
+            </span>
+
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              Predictive Monitoring
+            </span>
+          </div>
+
+        </div>
+
+        <div class="step-img">
+          <img src="grid15.jpg"
+               alt="Tolerance Drift Monitoring"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="process-step">
+
+        <div class="step-img">
+          <img src="grid16.jpg"
+               alt="Vision Verification"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+        <div>
+
+          <div class="step-num">Phase 04 · Verify</div>
+
+          <h3 class="step-h3">
+            Site-Mark Verification & Drawing Revision Checks
+          </h3>
+
+          <p class="step-p">
+            Engineers capture photographs of physical site markings using standard
+            mobile devices. GridSure AI compares field conditions against approved
+            design information and verifies whether the latest revision is being used.
+          </p>
+
+          <p class="step-p">
+            This reduces the risk of layout work being completed using superseded
+            drawings or incorrect coordinate references.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              Site Verification
+            </span>
+
+            <span class="risk-badge risk-light">
+              <span class="risk-dot"></span>
+              Revision Control
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="process-step">
+
+        <div>
+
+          <div class="step-num">Phase 05 · Benchmark</div>
+
+          <h3 class="step-h3">
+            Community Spatial Intelligence Network
+          </h3>
+
+          <p class="step-p">
+            GridSure AI continuously improves through anonymised operational
+            insights and benchmarking mechanisms designed to strengthen predictive
+            verification accuracy across future projects.
+          </p>
+
+          <p class="step-p">
+            This helps improve risk identification and enables ongoing refinement
+            of spatial quality-assurance workflows.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              Benchmarking
+            </span>
+
+            <span class="risk-badge risk-green">
+              <span class="risk-dot"></span>
+              Continuous Learning
+            </span>
+          </div>
+
+        </div>
+
+        <div class="step-img">
+          <img src="grid17.jpg"
+               alt="Community Spatial Intelligence Network"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+      </div>
+
+      <!-- PHASE 6 -->
+      <div class="process-step">
+
+        <div class="step-img">
+          <img src="grid18.jpg"
+               alt="Compliance Reporting"
+               style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+        </div>
+
+        <div>
+
+          <div class="step-num">Phase 06 · Report</div>
+
+          <h3 class="step-h3">
+            Compliance Reporting & Audit-Ready Documentation
+          </h3>
+
+          <p class="step-p">
+            Verification activities, layout reviews and project records are
+            organised into structured reports that support quality management,
+            project governance and compliance workflows.
+          </p>
+
+          <p class="step-p">
+            Project teams gain a clear digital record of verification activities,
+            improving transparency and supporting future audits and handovers.
+          </p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue">
+              <span class="risk-dot"></span>
+              Audit Trails
+            </span>
+
+            <span class="risk-badge risk-light">
+              <span class="risk-dot"></span>
+              Compliance Reports
+            </span>
+
+            <span class="risk-badge risk-green">
+              <span class="risk-dot"></span>
+              Digital Documentation
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+<!-- END PROCESS PAGE -->
+
+
+<!-- ═══════ PAGE: FAQ ═══════ -->
+<div class="page" id="page-faq">
+  <section style="background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 60%,#A8D8BC 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">FAQ</div>
+      <h2 class="section-h2 dark">Frequently Asked Questions</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:600px;">Everything you need to know about GridSure AI and what it means for your subcontracting firm's setting-out accuracy, structural compliance, and rework cost reduction.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container" style="max-width:840px;">
+      <div class="faq-wrap">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What is GridSure AI and why does my subcontracting business need it?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">GridSure AI is an AI-powered setting-out assurance and spatial verification platform built specifically for UK SME groundwork, piling, concrete frame, and drainage subcontractors. Unlike passive document management platforms or expensive hardware-dependent survey systems, GridSure AI acts as a predictive pre-pour quality gate  automatically auditing coordinate data, detecting tolerance drift, verifying physical peg markings via smartphone vision AI, and generating audit-ready compliance certificates  before a single cubic metre of concrete is poured. The average cost of a structural layout error in the UK is £10,000–£25,000 per occurrence; GridSure AI's pilot data shows an 18–28% reduction in structural rework from the first 8 weeks of deployment.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How quickly can we deploy GridSure AI on our active construction sites?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Deployment is designed to be immediate and low-friction. GridSure AI requires zero proprietary hardware  site teams use the total stations and smartphones they already own. In Year 1, the platform intentionally bypasses complex enterprise IT dependencies using direct file uploads (DWG, CSV, PDF) and mobile photo submissions. An active construction site can be fully onboarded within 2 weeks of cloud account setup. Pilot subcontractors reported successful integration of the verification workflow within approximately 2 weeks of initial cloud onboarding, with an average system usability rating of 4.1/5 for feature usefulness.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How does the Tolerance Drift Monitoring System work in practice?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">The Tolerance Drift Monitoring System aggregates all spatial coordinate inputs from active layout points on a live site to detect systematic directional biases that individual quality checks miss. For example: a robotic total station that is 1mm out of horizontal calibration will produce a 3mm error at 3 metres, a 15mm error at 15 metres, and a 30mm error across a full structural grid  each individual reading passing inspection but the cumulative pattern revealing a systematic instrument error. The platform detects this pattern early and alerts the field team to recalibrate the instrument before excavation or foundation pour begins, preventing structural misalignment that would otherwise require expensive demolition.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What happens when a coordinate error or drawing revision mismatch is detected?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">The system immediately generates a structured, plain-language alert specifying exactly which coordinate, gridline, or drawing revision is flagged, the magnitude of the deviation, the applicable British Standard tolerance threshold, and a recommended remedial action  all within 2–3 minutes of data upload. Field teams and project managers receive real-time notifications via the cloud dashboard and mobile app. The alert is permanently logged with a timestamp and the original uploaded data in the Golden Thread compliance ledger, creating an unalterable audit record for structural insurers, Building Safety Regulators, and third-party handover inspectors.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How does GridSure AI help with UK Building Safety Act 2022 compliance?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">The UK Building Safety Act 2022 legally mandates a digital, audit-ready "Golden Thread" of structural compliance records for all high-risk residential buildings and wider commercial infrastructure developments. GridSure AI automatically converts every coordinate audit, peg verification, tolerance drift alert, and drawing revision check into a timestamped, certified layout compliance certificate  aligned with the Building Safety Regulator's (BSR) verification frameworks, British Standards BS 5964 and BS EN 1090, and NHBC Technical Standards. Subcontractors can directly use these certificates to demonstrate active compliance during site inspections, structural handovers, and insurance assessments  dramatically reducing liability exposure and administrative burden.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How does GridSure AI help reduce insurance premiums?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Structural warranty providers, national insurance bodies such as NHBC, and commercial insurers increasingly require demonstrable evidence of active pre-pour quality governance to justify premium reductions. GridSure AI generates a continuous, structured audit trail of pre-pour coordinate verifications, tolerance drift monitoring, drawing revision compliance checks, and physical peg confirmations  all with timestamps and spatial accuracy scores. By presenting this data as a legally defensible risk mitigation history, subcontractors can negotiate lower structural liability and project insurance premiums  delivering a measurable financial return that typically covers the entire SaaS subscription cost many times over on a single project.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What are the pricing tiers for GridSure AI?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">GridSure AI offers three core SaaS subscription tiers: Starter Plan at £50/month for independent site engineers and freelance surveyors (manual + AI coordinate deconstruction, basic tolerance checks, personal verification dashboards); Professional Plan at £150/month for mid-sized regional groundwork and piling subcontractors (predictive coordinate checks, computer-vision peg verification, real-time drawing revision alerts, basic CDE integrations); and Enterprise Plan at £300/month for multi-site frame subcontractors and developers (full Procore/Autodesk API sync, automated Golden Thread BSR compliance reporting, C-SIN federated benchmarking, multi-site dashboards). One-time fees include Secure Connector Setup at £600 and Professional Project Onboarding at £500.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>Is GridSure AI compliant with UK GDPR and data privacy regulations?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Yes. GridSure AI is built on a privacy-by-design framework, fully compliant with UK GDPR and ICO standards. Proprietary CAD drawings, BIM designs, and developer site coordinates are handled with enterprise-grade data encryption both in transit and at rest. Geodetic and instrument-drift data used for the Community Spatial Intelligence Network (C-SIN) federated learning is fully anonymised and aggregated before any network-wide algorithm training  no sensitive developer IP is ever shared across the network. Periodic external security audits are planned as the platform scales to ensure ongoing data integrity and client confidentiality.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- end page faq -->
+
+
+<!-- ═══════ PAGE: PRICING ═══════ -->
+<div class="page" id="page-pricing">
+  <section style="background:linear-gradient(140deg,#E8F5ED 0%,#CEEBD9 60%,#A8D8BC 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Pricing</div>
+      <h2 class="section-h2 dark">Affordable SaaS Pricing for<br>UK SME Construction Subcontractors.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:640px;margin-bottom:40px;">GridSure AI is purpose-built for the cost-conscious UK subcontracting market. A single avoided rework incident typically saves £10,000–£25,000  far exceeding the annual cost of any subscription tier. Our flexible pricing model scales from independent site engineers to multi-site enterprise contractors.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <div class="price-card">
+          <div class="price-tier">Tier 01</div>
+          <div class="price-title">Starter Plan</div>
+          <div class="price-amount">£50<span>/month</span></div>
+          <p class="price-desc">Manual + AI coordinate verification for independent site engineers and freelance surveyors conducting setting-out activities on active UK developments.</p>
+          <ul class="price-features">
+            <li>Manual + AI coordinate deconstruction</li>
+            <li>Basic tolerance check tables (BS 5964)</li>
+            <li>Drawing upload & revision tracking</li>
+            <li>Personal verification dashboards</li>
+            <li>Standard compliance report export</li>
+            <li>Mobile-friendly browser interface</li>
+            <li>Email alert notifications</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Starter Plan →</button>
+        </div>
+
+        <div class="price-card featured">
+          <div class="featured-label">Most Popular</div>
+          <div class="price-tier">Tier 02</div>
+          <div class="price-title">Professional Plan</div>
+          <div class="price-amount">£150<span>/month</span></div>
+          <p class="price-desc">Predictive spatial intelligence for mid-sized regional groundwork, piling, and concrete frame subcontractors managing active UK construction sites.</p>
+          <ul class="price-features">
+            <li>Predictive coordinate checks & conflict alerts</li>
+            <li>Computer-vision peg & pin verification</li>
+            <li>Real-time drawing revision mismatch alerts</li>
+            <li>Tolerance Drift Monitoring System</li>
+            <li>Basic CDE database syncs</li>
+            <li>Golden Thread compliance certificates</li>
+            <li>Carbon rework estimator module</li>
+            <li>Priority email & chat support</li>
+          </ul>
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Professional →</button>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Tier 03</div>
+          <div class="price-title">Enterprise Plan</div>
+          <div class="price-amount">£300<span>/month</span></div>
+          <p class="price-desc">Full enterprise spatial assurance for multi-site frame subcontractors, regional developers, and structural engineering consultants requiring complete audit governance.</p>
+          <ul class="price-features">
+            <li>Full Procore & Autodesk API cloud sync</li>
+            <li>Automated Golden Thread BSR compliance</li>
+            <li>C-SIN federated benchmarking access</li>
+            <li>Multi-site oversight dashboards</li>
+            <li>ESG carbon offset reporting module</li>
+            <li>Site Tolerance Integrity Score</li>
+            <li>Dedicated customer success manager</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Enterprise →</button>
+        </div>
+
+      </div>
+
+      <!-- Add-ons -->
+      <div style="margin-top:56px;">
+        <div class="label-tag">Professional Add-Ons</div>
+        <h2 class="section-h2 dark" style="margin-bottom:8px;">One-Time Professional Services</h2>
+        <div class="section-divider divider-blue"></div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:32px;" class="addons-grid">
+          <div class="price-card">
+            <div class="price-tier">Add-On 01</div>
+            <div class="price-title">Secure Connector Setup</div>
+            <div class="price-amount">£600<span> one-time</span></div>
+            <p class="price-desc">Technical configuration and licensing of secure data-integration bridges to sync field-captured coordinates and total station outputs with cloud-native design registries.</p>
+            <ul class="price-features">
+              <li>Secure API bridge to CDE (Procore/Autodesk)</li>
+              <li>Total station output sync configuration</li>
+              <li>Coordinate database calibration</li>
+              <li>Onboarding training for site engineers</li>
+            </ul>
+            <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Add Connector Setup →</button>
+          </div>
+          <div class="price-card">
+            <div class="price-tier">Add-On 02</div>
+            <div class="price-title">Professional Project Onboarding</div>
+            <div class="price-amount">£500<span> one-time</span></div>
+            <p class="price-desc">Custom local coordinate system calibrations, database onboarding, workflow training packages, and site-specific tolerance profile configuration for new project starts.</p>
+            <ul class="price-features">
+              <li>Local grid-to-ground coordinate calibration</li>
+              <li>Site-specific tolerance profile setup</li>
+              <li>Workflow training for field teams</li>
+              <li>BS 5964 & NHBC compliance configuration</li>
+            </ul>
+            <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Add Onboarding →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page pricing -->
+
+
+<!-- ═══════ PAGE: CONTACT ═══════ -->
+<div class="page" id="page-contact">
+  <section style="background:linear-gradient(140deg,#071F11 0%,#0D3D21 60%,#1A6B3C 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag-white">Contact & Demo</div>
+      <h2 class="section-h2 white">Request a Platform Demo.<br>See GridSure AI Live on Your Site Coordinate Data.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:600px;">Our personalised demos show your project's actual coordinate audit results, live tolerance drift monitoring, and Golden Thread compliance certificate  using your real site data, not generic examples. We demonstrate exactly how the platform reduces layout rework and delivers measurable ROI within 8 to 12 weeks of pilot deployment.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="contact-wrap">
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form">
+          <h3>Book Your Platform Demo</h3>
+          <p>Fill in your details and our Site Assurance team will contact you within 24 hours to arrange a personalised demonstration.</p>
+
+          <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="bfab3745-54ed-47dd-b1e2-762ceb9a3fee">
+            <input type="hidden" name="subject" value="New GridSure AI Demo Request">
+            <input type="hidden" name="from_name" value="GridSure AI Website">
+
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" name="name" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" name="email" placeholder="your@company.co.uk" required>
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" placeholder="+44 7XXX XXXXXX">
+            </div>
+
+            <div class="form-group">
+              <label>Business / Organisation Name</label>
+              <input type="text" name="business_name" placeholder="Your subcontracting or development company name">
+            </div>
+
+            <div class="form-group">
+              <label>Business Type</label>
+              <select name="business_type">
+                <option>Groundwork & Drainage Subcontractor</option>
+                <option>Piling & Deep Foundation Subcontractor</option>
+                <option>Concrete Frame Subcontractor</option>
+                <option>Structural Steel Subcontractor</option>
+                <option>Regional Developer / Main Contractor</option>
+                <option>Independent Site Engineer / Surveyor</option>
+                <option>Structural Engineering Consultancy</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>What are you most interested in?</label>
+              <textarea name="message" placeholder="Tell us about your current setting-out challenges, types of projects (piling, groundworks, concrete frame), and the features you'd like to explore..." required></textarea>
+            </div>
+
+            <button class="btn-primary" style="width:100%;justify-content:center;" type="submit">Request Demo →</button>
+          </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info">
+          <h3>Why Book a Demo?</h3>
+          <p>Our personalised demos show your project's actual coordinate risk profile, live tolerance drift monitoring dashboard, mobile peg verification workflow, and compliance audit trail  using your real site data and coordinate schedules, not generic examples. We demonstrate how the AI Setting-Out Assurance Engine, Tolerance Drift Monitoring System, and Golden Thread Compliance Ledger work together to eliminate layout rework, protect your margins, and satisfy Building Safety Act audit requirements in real time.</p>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="text">
+              <strong>Email Us</strong>
+              <span>gridsureaiuk@outlook.com</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <div class="text">
+              <strong>Founder</strong>
+              <span>Saroj Pandey · Founder & CEO</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="text">
+              <strong>UK Headquarters</strong>
+              <span>London, United Kingdom</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-clock"></i></div>
+            <div class="text">
+              <strong>Response Time</strong>
+              <span>Within 24 hours · Mon–Fri 9am–6pm GMT</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="text">
+              <strong>Data Privacy</strong>
+              <span>UK GDPR · ICO Compliant · Privacy-by-Design</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-hard-hat"></i></div>
+            <div class="text">
+              <strong>Pilot Programme</strong>
+              <span>8–12 Week ROI Validated · 5–10 Active UK Sites · London & South East</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- end page contact -->
+
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">GridSure AI</div>
+        <p class="footer-desc">The UK's first AI-powered Setting-Out Assurance and Spatial Verification Platform  auditing, verifying, and protecting every coordinate decision on live UK construction sites in real time. See Clearly. Verify Precisely. Build Right First Time.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">UK GDPR Compliant</span>
+          <span class="footer-badge">BS 5964 Aligned</span>
+          <span class="footer-badge">BS EN 1090 Ready</span>
+          <span class="footer-badge">Building Safety Act 2022</span>
+          <span class="footer-badge">NHBC Standards</span>
+          <span class="footer-badge">ESG Impact Ready</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">AI Setting-Out Assurance Engine</a>
+          <a onclick="showPage('platform')">Tolerance Drift Monitoring System</a>
+          <a onclick="showPage('platform')">Site-Mark Intelligence (Vision AI)</a>
+          <a onclick="showPage('platform')">Revision-Sensitive Verification</a>
+          <a onclick="showPage('platform')">Golden Thread Compliance Ledger</a>
+          <a onclick="showPage('platform')">Carbon Rework Estimator</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-col">
+          <a onclick="showPage('about')">About GridSure AI</a>
+          <a onclick="showPage('about')">Saroj Pandey · Founder & CEO</a>
+          <a onclick="showPage('process')">How It Works</a>
+          <a onclick="showPage('faq')">FAQ</a>
+          <a onclick="showPage('market')">Market Analysis</a>
+          <a onclick="showPage('pricing')">Pricing & Plans</a>
+          <a onclick="showPage('contact')">Request a Demo</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Solutions</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">Groundwork Subcontractors</a>
+          <a onclick="showPage('platform')">Piling & Deep Foundation Firms</a>
+          <a onclick="showPage('platform')">Concrete Frame Contractors</a>
+          <a onclick="showPage('platform')">Regional Developers & Main Contractors</a>
+          <a onclick="showPage('pricing')">Starter · £50/mo</a>
+          <a onclick="showPage('pricing')">Professional · £150/mo</a>
+          <a onclick="showPage('pricing')">Enterprise · £300/mo</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>© 2026 <span>GridSure AI</span> · London, UK · UK GDPR Compliant · by Saroj Pandey · Founder & CEO</p>
+      <div class="footer-bottom-links">
+        <a onclick="showPage('contact')">Privacy Policy</a>
+        <a onclick="showPage('contact')">Terms of Service</a>
+        <a onclick="showPage('contact')">Confidential Business Plan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+/* ─── PAGE NAV ───────────────────────────────── */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg){pg.classList.add('active');}
+  const btn=document.getElementById('nav-'+name);
+  if(btn){btn.classList.add('active');}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='market'&&!window.marketChartsLoaded){initMarketCharts();window.marketChartsLoaded=true;}
+}
+
+function toggleCard(btn){
+  const card=btn.closest('.platform-card');
+  card.classList.toggle('open');
+  btn.innerHTML=card.classList.contains('open')?'Show Less':'Learn More';
+}
+
+function toggleFAQ(el){el.parentElement.classList.toggle('open');}
+
+function closeMobile(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+/* ─── CHART THEME ────────────────────────────── */
+const GRN='rgba(26,107,60,1)';
+const GRN2='rgba(26,107,60,0.7)';
+const GRN3='rgba(26,107,60,0.35)';
+const ORG='rgba(245,166,35,0.85)';
+const ORG2='rgba(245,166,35,0.45)';
+const GRID='rgba(26,107,60,0.08)';
+const MUTED='rgba(26,60,39,0.8)';
+
+Chart.defaults.font.family="'IBM Plex Mono', monospace";
+Chart.defaults.font.size=11;
+Chart.defaults.color=MUTED;
+
+/* ─── MARKET CHARTS ──────────────────────────── */
+function initMarketCharts(){
+  // UK Construction SAM by Region
+  new Chart(document.getElementById('chartSector').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['London','South East','North West','West Midlands','Scotland','Wales & N.I.'],
+      datasets:[{
+        label:'Regional Pipeline Share (%)',
+        data:[22.6,18.2,14.1,11.3,8.4,6.5],
+        backgroundColor:[GRN,GRN2,GRN3,ORG,ORG2,'rgba(26,107,60,0.2)'],
+        borderRadius:6,barPercentage:0.6
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Root Causes Doughnut
+  new Chart(document.getElementById('chartRootCause').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Manual Drawing-to-Site Translation (45%)','Out-of-Date Revision Execution (34%)','Undetected Cumulative Tolerance Drift (21%)'],
+      datasets:[{
+        data:[45,34,21],
+        backgroundColor:[GRN,ORG,GRN2],
+        borderColor:['rgba(26,107,60,0.9)','rgba(245,166,35,0.9)','rgba(26,107,60,0.7)'],
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:10,font:{size:10}}}}}
+  });
+
+  // Radar Competitive
+  new Chart(document.getElementById('chartRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['Coordinate Auditing','Tolerance Drift Detection','Vision Peg Verification','UK Standards Compliance','Golden Thread Reports','SME Affordability'],
+      datasets:[
+        {label:'GridSure AI',data:[5,5,5,5,5,5],backgroundColor:'rgba(26,107,60,0.1)',borderColor:GRN,borderWidth:2,pointBackgroundColor:GRN},
+        {label:'Leica ConX / Trimble',data:[4,2,1,3,1,1],backgroundColor:'rgba(245,166,35,0.06)',borderColor:ORG,borderWidth:1.5,pointBackgroundColor:ORG},
+        {label:'Autodesk Build',data:[2,1,1,2,2,2],backgroundColor:'rgba(26,107,60,0.05)',borderColor:'rgba(26,107,60,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(26,107,60,0.5)'},
+        {label:'Fieldwire',data:[1,0,0,1,1,3],backgroundColor:'rgba(26,60,39,0.05)',borderColor:'rgba(26,60,39,0.4)',borderWidth:1.5,pointBackgroundColor:'rgba(26,60,39,0.4)'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{r:{backgroundColor:'rgba(26,107,60,0.01)',grid:{color:GRID},pointLabels:{color:MUTED,font:{size:10}},ticks:{display:false},min:0,max:5}}}
+  });
+
+  // Market Growth
+  new Chart(document.getElementById('chartGrowth').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['2022','2023','2024','2025','2026','2027','2028','2030'],
+      datasets:[
+        {label:'Global ConTech AI QA Market (USD B)',data:[1.8,2.2,3.1,3.63,4.4,5.3,6.5,9.8],backgroundColor:GRN2,borderRadius:5,barPercentage:0.55},
+        {type:'line',label:'UK Regulatory ConTech Adoption %',data:[null,4,8,14,22,34,48,68],borderColor:ORG,borderWidth:2,yAxisID:'y2',tension:0.4,pointBackgroundColor:ORG,fill:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:12,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'$'+v+'B'}},y2:{position:'right',grid:{display:false},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Performance Comparison
+  new Chart(document.getElementById('chartPerf').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Coordinate Auditing','Tolerance Drift Detection','Vision Peg Verification','UK Standards Compliance','Golden Thread Reporting','SME Deployment Speed'],
+      datasets:[
+        {label:'GridSure AI',data:[97,95,93,99,98,96],backgroundColor:GRN2,borderRadius:5,barPercentage:0.35},
+        {label:'Market Average (Legacy Tools)',data:[4,2,0,5,3,8],backgroundColor:ORG2,borderRadius:5,barPercentage:0.35}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED,font:{size:9}}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+' pts'}}}}
+  });
+}
+</script>
+</body>
+</html>
